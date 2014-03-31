@@ -229,7 +229,6 @@ func callGet(apiMethod string, params *apiParams, args map[string]interface{}, r
 
 	uri := constructUrl(UriApiSecBase, urlParams)
 
-	client := &http.Client{}
 	req, err := http.NewRequest("GET", uri, nil)
 	if err != nil {
 		return
@@ -238,15 +237,19 @@ func callGet(apiMethod string, params *apiParams, args map[string]interface{}, r
 		req.Header.Set("User-Agent", params.useragent)
 	}
 
-	res, err := client.Do(req)
+	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return
 	}
+	defer res.Body.Close()
+	
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return
 	}
+
 	err = parseResponse(body, result)
+
 	return
 }
 
