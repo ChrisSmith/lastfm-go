@@ -3,6 +3,31 @@ package lastfm
 import "encoding/xml"
 
 //geo.getEvents
+
+type ImagePair struct {
+	Size string `xml:"size,attr"`
+	Url  string `xml:",chardata"`	
+}
+
+type GeoVenue struct {
+	Id       string `xml:"id"`
+	Name     string `xml:"name"`
+	Location struct {
+		City       string `xml:"city"`
+		Country    string `xml:"country"`
+		Street     string `xml:"street"`
+		Postalcode string `xml:"postalcode"`
+		Point      struct {
+			Lat  string `xml:"lat"`
+			Long string `xml:"long"`
+		} `xml:"point"`
+	} `xml:"location"`
+	Url         string `xml:"url"`
+	Website     string `xml:"website"`
+	PhoneNumber string `xml:"phonenumber"`
+	Images      []ImagePair `xml:"image"`
+}
+
 type GeoGetEvents struct {
 	XMLName       xml.Name `xml:"events"`
 	Geo           string   `xml:"geo,attr"`
@@ -21,27 +46,7 @@ type GeoGetEvents struct {
 			Headliner string   `xml:"headliner"`
 			Artists   []string `xml:"artist"`
 		} `xml:"artists"`
-		Venue struct {
-			Id       string `xml:"id"`
-			Name     string `xml:"name"`
-			Location struct {
-				City       string `xml:"city"`
-				Country    string `xml:"country"`
-				Street     string `xml:"street"`
-				Postalcode string `xml:"postalcode"`
-				Point      struct {
-					Lat  string `xml:"lat"`
-					Long string `xml:"long"`
-				} `xml:"point"`
-			} `xml:"location"`
-			Url         string `xml:"url"`
-			Website     string `xml:"website"`
-			PhoneNumber string `xml:"phonenumber"`
-			Images      []struct {
-				Size string `xml:"size,attr"`
-				Url  string `xml:",chardata"`
-			} `xml:"image"`
-		} `xml:"venue"`
+		Venue  GeoVenue`xml:"venue"`
 		StartDate   string `xml:"startdate"`
 		Description string `xml:"description"`
 		Images      []struct {
