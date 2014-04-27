@@ -28,6 +28,32 @@ type GeoVenue struct {
 	Images      []ImagePair `xml:"image"`
 }
 
+type GeoEvent struct {
+	Geo     string `xml:"geo,attr"`
+	Id      string `xml:"id"`
+	Title   string `xml:"title"`
+	Artists struct {
+		Headliner string   `xml:"headliner"`
+		Artists   []string `xml:"artist"`
+	} `xml:"artists"`
+	Venue  GeoVenue`xml:"venue"`
+	StartDate   string `xml:"startDate"`
+	EndDate   string `xml:"endDate"`
+	Description string `xml:"description"`
+	Images      []ImagePair `xml:"image"`
+	Attendance string `xml:"attendance"`
+	Reviews    string `xml:"reviews"`
+	Tag        string `xml:"tag"`
+	Url        string `xml:"url"`
+	Website    string `xml:"website"`
+	Tickets    []struct {
+		Supplier string `xml:"supplier,attr"`
+		Url      string `xml",chardata"`
+	} `xml:"tickets>ticket"`
+	Canceled string   `xml:"canceled"`
+	Tags     []string `xml:"tags>tag"`
+}
+
 type GeoGetEvents struct {
 	XMLName       xml.Name `xml:"events"`
 	Geo           string   `xml:"geo,attr"`
@@ -38,33 +64,7 @@ type GeoGetEvents struct {
 	Page          int      `xml:"page,attr"`
 	PerPage       int      `xml:"perPage,attr"`
 	TotalPages    int      `xml:"totalPages,attr"`
-	Events        []struct {
-		Geo     string `xml:"geo,attr"`
-		Id      string `xml:"id"`
-		Title   string `xml:"title"`
-		Artists struct {
-			Headliner string   `xml:"headliner"`
-			Artists   []string `xml:"artist"`
-		} `xml:"artists"`
-		Venue  GeoVenue`xml:"venue"`
-		StartDate   string `xml:"startdate"`
-		Description string `xml:"description"`
-		Images      []struct {
-			Size string `xml:"size,attr"`
-			Url  string `xml:",chardata"`
-		} `xml:"image"`
-		Attendance string `xml:"attendance"`
-		Reviews    string `xml:"reviews"`
-		Tag        string `xml:"tag"`
-		Url        string `xml:"url"`
-		Website    string `xml:"website"`
-		Tickets    []struct {
-			Supplier string `xml:"supplier,attr"`
-			Url      string `xml",chardata"`
-		} `xml:"tickets>ticket"`
-		Canceled string   `xml:"canceled"`
-		Tags     []string `xml:"tags>tag"`
-	} `xml:"event"`
+	Events        []GeoEvent `xml:"event"`
 }
 
 //geo.getMetroArtistChart

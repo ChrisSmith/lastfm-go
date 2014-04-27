@@ -84,10 +84,7 @@ type ArtistGetInfo struct {
 	Name   string `xml:"name"`
 	Mbid   string `xml:"mbid"`
 	Url    string `xml:"url"`
-	Images []struct {
-		Size string `xml:"size,attr"`
-		Url  string `xml:",chardata"`
-	} `xml:"image"`
+	Images      []ImagePair `xml:"image"`
 	Streamable string `xml:"streamable"`
 	Stats      struct {
 		Listeners string `xml:"listeners"`
