@@ -225,21 +225,20 @@ type ArtistGetShouts struct {
 	} `xml:"shout"`
 }
 
+type SimilarArtist struct {
+	Name   string `xml:"name"`
+	Mbid   string `xml:"mbid"`
+	Match  float64 `xml:"match"`
+	Url    string `xml:"url"`
+	Images      []ImagePair `xml:"image"`
+	Streamable string `xml:"streamable"`
+}
+
 //artist.getSimilar
 type ArtistGetSimilar struct {
 	XMLName  xml.Name `xml:"similarartists"`
 	Artist   string   `xml:"artist,attr"`
-	Similars []struct {
-		Name   string `xml:"name"`
-		Mbid   string `xml:"mbid"`
-		Match  string `xml:"match"`
-		Url    string `xml:"url"`
-		Images []struct {
-			Size string `xml:"size,attr"`
-			Url  string `xml:",chardata"`
-		} `xml:"image"`
-		Streamable string `xml:"streamable"`
-	} `xml:"artist"`
+	Similars []SimilarArtist `xml:"artist"`
 }
 
 //artist.getTags
